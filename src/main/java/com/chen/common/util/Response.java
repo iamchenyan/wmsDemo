@@ -46,12 +46,34 @@ public class Response {
 	
 	/**
 	 *  设置 response中携带的数据
-	 * @param data response中携带的数据
+	 * @param data response 中携带的数据
 	 */
 	public void setResponseData(Object data) {
 		this.responseContent.put(Response.RESPONSE_DATA, data) ;
 	}
 	
+	/**
+	 *  设置 response 中携带的数据的数量 与 RESPONSE_DATA 配合用
+	 * @param total 数据数量
+	 */
+	public void setResponseTotal(long total) {
+		this.responseContent.put(Response.RESPONSE_TOTAL, total) ;
+	}
 	
-
+	/**
+	 *  设置 response 自定义信息
+	 * @param key 自定义 key
+	 * @param value 自定义值
+	 */
+	public void setCustomerInfo(String key ,Object value) {
+		this.responseContent.put(key, value) ;
+	}
+	
+	/**
+	 *  生成 response对象
+	 * @return response 的 Map 对象
+	 */
+	public Map<String ,Object> generateResponse(){
+		return this.responseContent ;
+	}
 }

@@ -11,12 +11,11 @@ import org.springframework.stereotype.Component;
 public class ResponseUtil {
 
 	/**
-     * 生成一个 Response 对象
+     * 获得一个 Response 对象
      * @return response 对象
      */
     public Response getResponseInstance(){
         Response response = new Response();
-
         return response;
     }
     

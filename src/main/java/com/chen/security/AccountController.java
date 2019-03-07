@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.chen.common.util.Response;
+import com.chen.common.util.ResponseUtil;
 import com.chen.security.util.CheckCodeGenerator;
 
 
@@ -33,6 +35,8 @@ public class AccountController {
 	
 	private static Logger log = Logger.getLogger("application") ;
 	
+	private ResponseUtil responseUtil ;
+	
 	@Autowired
     private CheckCodeGenerator checkCodeGenerator;
 	
@@ -42,7 +46,8 @@ public class AccountController {
 	@ResponseBody
 	public Map<String, Object> login(@RequestBody Map<String, Object> user){
 		// 获取 Response
-		Response response = 
+		Response response = responseUtil.getResponseInstance() ;
+		String result = Response.RESPONSE_RESULT_ERROR ;
 		
 		
 		return null ;
