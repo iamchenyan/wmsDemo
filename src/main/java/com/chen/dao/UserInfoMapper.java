@@ -2,7 +2,7 @@ package com.chen.dao;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.chen.pojo.UserInfoDO;
 
 /**
  *  用户账户信息 dao层
@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface UserInfoMapper {
 
-
+	UserInfoDO selectByUserId(Integer userId) ;
 
 }

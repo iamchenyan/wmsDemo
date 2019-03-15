@@ -1,4 +1,4 @@
-package com.chen.security;
+package com.chen.security.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -11,6 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +26,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.chen.common.service.Interface.SystemLogService;
 import com.chen.common.util.Response;
 import com.chen.common.util.ResponseUtil;
+import com.chen.exception.SystemLogServiceException;
 import com.chen.security.util.CheckCodeGenerator;
 
 
@@ -35,11 +44,22 @@ public class AccountController {
 	
 	private static Logger log = Logger.getLogger("application") ;
 	
+	@Autowired
 	private ResponseUtil responseUtil ;
-	
 	@Autowired
     private CheckCodeGenerator checkCodeGenerator;
+	@Autowired
+	private SystemLogService systemLogService ;
 	
+	private static final String USER_ID = "id" ;
+	private static final String USER_NAME = "userName" ;
+	private static final Object USER_PASSWORD = "password";
+	
+	/**
+	 *  登录管理
+	 * @param user 用户信息
+	 * @return  Map (包括登录结果)
+	 */
 	@RequestMapping(value = "login" ,method = RequestMethod.POST)
 	// 抑制单类型警告
 	@SuppressWarnings("unchecked")
@@ -48,9 +68,44 @@ public class AccountController {
 		// 获取 Response
 		Response response = responseUtil.getResponseInstance() ;
 		String result = Response.RESPONSE_RESULT_ERROR ;
+		String errorMsg = "" ;
 		
-		
-		return null ;
+		// 获取当前的用户的 subject(shiro)
+		Subject currentUser = SecurityUtils.getSubject() ;
+		// 判断是否已登录过
+		if(currentUser != null && !currentUser.isAuthenticated()) {
+			String id = (String)user.get(USER_ID) ;
+			String pwd = (String)user.get(USER_PASSWORD) ;
+			
+			UsernamePasswordToken token  = new UsernamePasswordToken(id ,pwd) ;
+			try {
+				// 调用 realms/UserAuthorizingRealm 中的 doGetAuthenticationInfo 方法
+				currentUser.login(token) ;
+				
+				Session session = currentUser.getSession() ;
+				session.setAttribute("isAuthenticate", "true") ;
+				Integer userId_int = (Integer)session.getAttribute("userId") ;
+				String userName = (String)session.getAttribute("userName") ;
+				String accessIp = session.getHost() ;
+				systemLogService.insertAccessRecord(userId_int, userName, accessIp, SystemLogService.ACCESS_TYPE_LOGIN);
+			
+				result = Response.RESPONSE_RESULT_SUCCESS ;
+			}  catch (UnknownAccountException e) {
+                errorMsg = "unknownAccount";
+            } catch (IncorrectCredentialsException e) {
+                errorMsg = "incorrectCredentials";
+            } catch (AuthenticationException e) {
+                errorMsg = "authenticationError";
+            } catch (SystemLogServiceException e) {
+                errorMsg = "ServerError";
+            }
+		} else {
+			errorMsg = "already login";
+		}
+		// 设置 Response
+        response.setResponseResult(result);
+        response.setResponseMsg(errorMsg);
+        return response.generateResponse();
 	}
 	
 	/**

@@ -15,7 +15,7 @@
     <context:property-placeholder location="classpath:config/DB.properties"/>
     
     <!-- 配置自动扫描包 -->
-    <context:component-scan base-package="com.ken.wms">
+    <context:component-scan base-package="com.chen.wms">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
@@ -48,7 +48,7 @@
     </bean>
     
     <!-- Realm 的配置 -->
-    <bean id="userAuthorizingRealm" class="com.chenyan.wms.security.realms.UserAuthorizingRealm"/>
+    <bean id="userAuthorizingRealm" class="com.chen.security.realms.UserAuthorizingRealm"/>
     
     <!-- spring整合配置 -->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
@@ -72,13 +72,13 @@
     </bean>
     
     <!-- 配置身份验证，处理ajax请求 -->
-    <bean id="extendFormAuthenticationFilter" class="com.chenyan.wms.security.filter.ExtendFormAuthenticationFilter">
+    <bean id="extendFormAuthenticationFilter" class="com.chen.security.filter.ExtendFormAuthenticationFilter">
         <property name="usernameParam" value="username"/>
         <property name="passwordParam" value="password"/>
         <property name="rememberMeParam" value="rememberMe"/>
         <property name="loginUrl" value="/login"/>
     </bean>
-    <bean id="anyOfRoles" class="com.chenyan.wms.security.filter.AnyOfRolesAuthorizationFilter"/>
+    <bean id="anyOfRoles" class="com.chen.security.filter.AnyOfRolesAuthorizationFilter"/>
     <!-- 配置获取 URL 权限信息的 Factory -->
     <bean id="filterChainDefinitionMap" factory-bean="filterChainDefinitionMapBuilder"
           factory-method="builderFilterChainDefinitionMap"/>
@@ -99,7 +99,7 @@
     <!-- 配置 SqlSessionFactoryBean (sqlSession工厂) -->
     <bean id="SqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="configLocation" value="classpath:config/MyBatisConfiguration.xml"/>
+        <property name="configLocation" value="classpath:config/mybatis.xml"/>
     </bean>
     
     <!-- 配置事务 -->
@@ -115,20 +115,20 @@
     </tx:advice>
     
     <aop:config>
-        <aop:pointcut expression="execution(* com.chenyan.wms.common.service.Interface..*.*(..)) ||
-         execution(* com.chenyan.wms.security.service.Interface..*.*(..))"
+        <aop:pointcut expression="execution(* com.chen.common.service.Interface..*.*(..)) ||
+         execution(* com.chen.security.service.Interface..*.*(..))"
                       id="txAdvicePointcut"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txAdvicePointcut" order="1"/>
     </aop:config>
     
     <!-- 配置 Service 层日志记录 -->
-    <bean id="serviceLogging" class="com.chenyan.wms.util.aop.ServiceLogging"/>
+    <bean id="serviceLogging" class="com.ken.wms.util.aop.ServiceLogging"/>
     <!-- 配置用户操作日志记录 -->
-    <bean id="userOperationLogging" class="com.chenyan.wms.util.aop.UserOperationLogging"/>
+    <bean id="userOperationLogging" class="com.ken.wms.util.aop.UserOperationLogging"/>
     
     <!-- AOP 配置 -->
     <aop:config>
-        <aop:pointcut id="serviceMethodLoggingPointcut" expression="execution(* com.chenyan.wms.common.service.Impl.*.*(..)) ||
+        <aop:pointcut id="serviceMethodLoggingPointcut" expression="execution(* com.chen.wms.common.service.Impl.*.*(..)) ||
          execution(* com.chenyan.wms.security.service.Impl.*.*(..))"/>
         <aop:aspect id="serviceLoggingAspect" ref="serviceLogging" order="100">
             <aop:before method="loggingMethodInvoked" pointcut-ref="serviceMethodLoggingPointcut"/>
