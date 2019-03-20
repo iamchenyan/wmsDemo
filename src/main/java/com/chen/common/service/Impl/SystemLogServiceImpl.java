@@ -15,7 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chen.common.service.Interface.SystemLogService;
+import com.chen.dao.AccessRecordMapper;
+import com.chen.dao.UserOperationRecordDTO;
 import com.chen.exception.SystemLogServiceException;
+import com.chen.pojo.AccessRecordDO;
+import com.chen.pojo.AccessRecordDTO;
+import com.chen.pojo.UserOperationRecordDO;
+import com.chen.pojo.UserOperationRecordMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 

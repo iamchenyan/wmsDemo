@@ -24,7 +24,7 @@
     <!--<aop:aspectj-autoproxy/>-->
     
     <!-- excelUtil 配置 -->
-    <bean id="ExcelUtil" class="com.ken.wms.common.util.ExcelUtil">
+    <bean id="ExcelUtil" class="com.chen.common.util.ExcelUtil">
         <constructor-arg type="java.lang.String" value="config/ExcelUtilConfig.xml"/>
     </bean>
     
@@ -83,7 +83,7 @@
     <bean id="filterChainDefinitionMap" factory-bean="filterChainDefinitionMapBuilder"
           factory-method="builderFilterChainDefinitionMap"/>
     <bean id="filterChainDefinitionMapBuilder"
-          class="com.chenyan.wms.security.service.FilterChainDefinitionMapBuilder"/>
+          class="com.chen.security.service.FilterChainDefinitionMapBuilder"/>
     
     <!-- 持久化层配置 -->
     
@@ -122,14 +122,14 @@
     </aop:config>
     
     <!-- 配置 Service 层日志记录 -->
-    <bean id="serviceLogging" class="com.ken.wms.util.aop.ServiceLogging"/>
+    <bean id="serviceLogging" class="com.chen.util.aop.ServiceLogging"/>
     <!-- 配置用户操作日志记录 -->
-    <bean id="userOperationLogging" class="com.ken.wms.util.aop.UserOperationLogging"/>
+    <bean id="userOperationLogging" class="com.chen.util.aop.UserOperationLogging"/>
     
     <!-- AOP 配置 -->
     <aop:config>
         <aop:pointcut id="serviceMethodLoggingPointcut" expression="execution(* com.chen.wms.common.service.Impl.*.*(..)) ||
-         execution(* com.chenyan.wms.security.service.Impl.*.*(..))"/>
+         execution(* com.chen.security.service.Impl.*.*(..))"/>
         <aop:aspect id="serviceLoggingAspect" ref="serviceLogging" order="100">
             <aop:before method="loggingMethodInvoked" pointcut-ref="serviceMethodLoggingPointcut"/>
             <aop:after-throwing method="loggingServiceException" pointcut-ref="serviceMethodLoggingPointcut"
@@ -137,7 +137,7 @@
         </aop:aspect>
     </aop:config>
     <aop:config>
-        <aop:pointcut expression="execution(* com.kchenyan.wms.common.service.Impl.*.*(..)) and @annotation(userOperation)" id="userOperationLoggingPointcut"/>
+        <aop:pointcut expression="execution(* com.chen.common.service.Impl.*.*(..)) and @annotation(userOperation)" id="userOperationLoggingPointcut"/>
         <aop:aspect id="userOperationLoggingAspect" ref="userOperationLogging" order="20">
             <aop:after-returning method="loggingUserOperation" pointcut-ref="userOperationLoggingPointcut"
                                  returning="returnValue"/>
@@ -146,7 +146,7 @@
     
     <!-- 配置 MyBatis MapperScannerConfigure -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.chenyan.wms.dao"/>
+        <property name="basePackage" value="com.chen.dao"/>
     </bean>
 		
 </beans>
