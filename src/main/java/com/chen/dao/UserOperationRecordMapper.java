@@ -1,7 +1,9 @@
-package com.chen.pojo;
+package com.chen.dao;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import com.chen.pojo.UserOperationRecordDO;
 
 import java.util.Date;
 import java.util.List;

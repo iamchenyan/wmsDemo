@@ -10,11 +10,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import org.springframework.stereotype.Component;
+
 /** 
 * 
 * @author 作者 Your-Name: 
 * @version 创建时间：2019年3月6日 下午5:21:31 
 */
+@Component
 public class CheckCodeGenerator {
 
 	private static char[] codeSequence = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',

@@ -1,9 +1,9 @@
 package com.chen.exception;
 
 /**
- * RepositoryAdminManageService异常
+ *  RepositoryAdminManageService异常
  * @author chenyan
- *  2019年3月20日
+ *  2019年4月21日
  */
 public class RepositoryAdminManageServiceException extends BusinessException {
 

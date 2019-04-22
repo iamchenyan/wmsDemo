@@ -1,13 +1,13 @@
 package com.chen.exception;
 
-/** 
-* 
-* @author 作者 chenyan
-* @version 创建时间：2019年3月12日 下午4:43:20 
-*/
-public class UserInfoServiceException extends BusinessException{
+/**
+ *  UserInfoService异常
+ * @author chenyan
+ *  2019年4月21日
+ */
+public class UserInfoServiceException extends BusinessException {
 
-	public UserInfoServiceException(){
+    public UserInfoServiceException(){
         super();
     }
 
@@ -22,5 +22,5 @@ public class UserInfoServiceException extends BusinessException{
     public UserInfoServiceException(String exceptionDesc){
         super(exceptionDesc);
     }
-    
+
 }

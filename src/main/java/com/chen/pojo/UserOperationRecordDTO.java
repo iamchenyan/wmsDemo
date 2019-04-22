@@ -1,4 +1,4 @@
-package com.chen.dao;
+package com.chen.pojo;
 
 /** 
  *  用户操作记录DTO

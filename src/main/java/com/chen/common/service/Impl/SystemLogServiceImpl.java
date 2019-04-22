@@ -16,20 +16,19 @@ import org.springframework.stereotype.Service;
 
 import com.chen.common.service.Interface.SystemLogService;
 import com.chen.dao.AccessRecordMapper;
-import com.chen.dao.UserOperationRecordDTO;
+import com.chen.dao.UserOperationRecordMapper;
 import com.chen.exception.SystemLogServiceException;
 import com.chen.pojo.AccessRecordDO;
 import com.chen.pojo.AccessRecordDTO;
 import com.chen.pojo.UserOperationRecordDO;
-import com.chen.pojo.UserOperationRecordMapper;
+import com.chen.pojo.UserOperationRecordDTO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 /**
- * 系统操作日志 Service 实现
- *
- * @author Ken
- * @since 2017/4/7.
+ *  系统操作日志 Service 实现
+ * @author chenyan
+ *  2019年4月22日
  */
 @Service
 public class SystemLogServiceImpl implements SystemLogService {

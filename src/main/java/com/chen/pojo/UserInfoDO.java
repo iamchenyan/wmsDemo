@@ -3,7 +3,7 @@ package com.chen.pojo;
 /**
  *  用户账户信息(数据传输对象)
  * @author chenyan
- *  2019年3月12日
+ *  2019年4月22日
  */
 public class UserInfoDO {
 

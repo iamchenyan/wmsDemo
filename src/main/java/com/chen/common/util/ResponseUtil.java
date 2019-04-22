@@ -14,7 +14,7 @@ public class ResponseUtil {
      * 获得一个 Response 对象
      * @return response 对象
      */
-    public Response getResponseInstance(){
+    public Response newResponseInstance(){
         Response response = new Response();
         return response;
     }

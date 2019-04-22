@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.chen.dao.UserInfoMapper;
 import com.chen.dao.UserPermissionMapper;
@@ -19,6 +20,7 @@ import com.chen.security.service.Interface.UserInfoService;
 * @author 作者 chenyan
 * @version 创建时间：2019年3月12日 下午5:05:40 
 */
+@Service
 public class UserInfoServiceImpl implements UserInfoService {
 
 	@Autowired
@@ -27,7 +29,15 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Autowired
 	private UserPermissionMapper userPermissionMapper ;
 	
-	@Override
+	@Autowired
+	UserInfoService userInfoService ;
+	
+	/**
+     *  获取指定用户ID对应的用户账户信息
+     *
+     * @param userID 用户ID
+     * @return 返回用户账户信息
+     */
 	public UserInfoDTO getUserInfo(Integer userId) throws UserInfoServiceException {
 		if(userId == null) {
 			return null ;
@@ -39,6 +49,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 			
 			// 获取用户角色信息
 			List<RoleDO> roles = userPermissionMapper.selectUserRole(userId) ;
+			
 			return assembleUserInfo(userInfoDO, roles) ;
 		} catch (PersistenceException e) {
 			throw new UserInfoServiceException(e) ;
@@ -82,6 +93,24 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public Set<String> getUserRoles(Integer userId) throws UserInfoServiceException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void updateUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteUserInfo(Integer userID) throws UserInfoServiceException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean insertUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

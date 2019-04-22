@@ -5,7 +5,7 @@ import java.sql.Date;
 /**
  *  仓库管理员信息
  * @author chenyan
- *  2019年3月20日
+ *  2019年4月21日
  */
 public class RepositoryAdmin {
 

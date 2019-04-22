@@ -3,7 +3,7 @@ package com.chen.pojo;
 /**
  *  系统使用的角色信息
  * @author chenyan
- *  2019年3月12日
+ *  2019年4月22日
  */
 public class RoleDO {
 

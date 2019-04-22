@@ -60,13 +60,13 @@ public class AccountController {
 	 * @param user 用户信息
 	 * @return  Map (包括登录结果)
 	 */
-	@RequestMapping(value = "login" ,method = RequestMethod.POST)
 	// 抑制单类型警告
 	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "login" ,method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> login(@RequestBody Map<String, Object> user){
 		// 获取 Response
-		Response response = responseUtil.getResponseInstance() ;
+		Response response = responseUtil.newResponseInstance() ;
 		String result = Response.RESPONSE_RESULT_ERROR ;
 		String errorMsg = "" ;
 		

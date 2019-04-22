@@ -15,7 +15,7 @@
     <context:property-placeholder location="classpath:config/DB.properties"/>
     
     <!-- 配置自动扫描包 -->
-    <context:component-scan base-package="com.chen.wms">
+    <context:component-scan base-package="com.chen">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
@@ -28,7 +28,7 @@
         <constructor-arg type="java.lang.String" value="config/ExcelUtilConfig.xml"/>
     </bean>
     
-    <!-- spring 核心bean -->
+    <!-- spring shiro 核心bean -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="cacheManager" ref="cacheManager"/>
         <property name="authenticator" ref="authenticator"/>
@@ -50,7 +50,7 @@
     <!-- Realm 的配置 -->
     <bean id="userAuthorizingRealm" class="com.chen.security.realms.UserAuthorizingRealm"/>
     
-    <!-- spring整合配置 -->
+    <!-- spring-shiro 整合配置 -->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
           depends-on="lifecycleBeanPostProcessor"/>
@@ -128,7 +128,7 @@
     
     <!-- AOP 配置 -->
     <aop:config>
-        <aop:pointcut id="serviceMethodLoggingPointcut" expression="execution(* com.chen.wms.common.service.Impl.*.*(..)) ||
+        <aop:pointcut id="serviceMethodLoggingPointcut" expression="execution(* com.chen.common.service.Impl.*.*(..)) ||
          execution(* com.chen.security.service.Impl.*.*(..))"/>
         <aop:aspect id="serviceLoggingAspect" ref="serviceLogging" order="100">
             <aop:before method="loggingMethodInvoked" pointcut-ref="serviceMethodLoggingPointcut"/>

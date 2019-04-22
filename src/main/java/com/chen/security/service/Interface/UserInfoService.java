@@ -44,9 +44,25 @@ public interface UserInfoService {
 	 */
 	Set<String> getUserRoles(Integer userId) throws UserInfoServiceException ;
 	
-	// 更新
+	/**
+	 * 	更新用户信息
+	 * @param userInfoDTO 用户帐户信息
+	 * @throws UserInfoServiceException
+	 */
+	void updateUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException;
 
-	// 删除
+	/**
+	 *  删除指定用户
+	 * @param userID 指定用户唯一 ID
+	 * @throws UserInfoServiceException
+	 */
+	void deleteUserInfo(Integer userID) throws UserInfoServiceException;
 	
-	// 新增
+	/**
+	 *  添加一条用户信息
+	 * @param userInfoDTO 用户信息对象
+	 * @return
+	 * @throws UserInfoServiceException
+	 */
+	boolean insertUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException;
 }
